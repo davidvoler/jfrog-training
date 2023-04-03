@@ -1,0 +1,26 @@
+postgresql:
+  enabled: false
+  postgresqlUsername: postgres
+  postgresqlPassword: isaac
+artifactory:
+  database:
+    url: jdbc:postgresql://postgres:5432/platform-artifactory
+    user: postgres
+    password: isaac
+xray:
+  enabled: false
+  database:
+    url: "postgres://postgres:5432/platform-xray?sslmode=disable"
+    user: postgres
+    password: isaac
+distribution:
+  enabled: false
+  database:
+    url: jdbc:postgresql://postgres:5432/platform-distribution
+    user: postgres
+    password: isaac
+insight:
+  database:
+    url: jdbc:postgresql://postgres:5432/platform-insights
+pipelines:
+  enabled: false

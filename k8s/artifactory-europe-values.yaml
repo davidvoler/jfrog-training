@@ -1,0 +1,26 @@
+artifactory:
+  consoleLog: true
+nginx:
+  http:
+    externalPort: 83
+  https:
+    externalPort: 446
+databaseUpgradeReady: true
+
+# For internal DB
+#postgresql:
+#  postgresqlUsername: postgres
+#  postgresqlPassword: isaac
+
+# For external DB
+postgresql:
+  enabled: false
+database:
+  # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+  # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+  url: jdbc:postgresql://postgres:5432/artifactory-europe
+  type: postgresql
+  driver: org.postgresql.Driver
+  user: postgres
+  # TODO: Change this to be your PostgreSQL's root password
+  password: isaac

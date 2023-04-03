@@ -1,0 +1,60 @@
+global:
+  # Internal Postgres must be set to false
+  postgresql:
+    user: postgres
+    # TODO: Change this to be your PostgreSQL's root password
+    password: isaac
+    # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+    # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+    host: postgres
+    port: 5432
+    database: pipelines
+    ssl: false
+postgresql:
+  enabled: false
+pipelines:
+  masterKey: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+  joinKey: 044c6240e62129e75d5ef9def656d992
+  authToken: 99eb7537-d920-4f8a-8180-fa297a1263ac
+  serviceId: jfpip@1234567890
+
+  jfrogUrl: http://artifactory-artifactory-nginx:81
+  jfrogUrlUI: http://artifactory-artifactory-nginx:81
+
+  replicaCount: 1
+
+  msg:
+    uiUserPassword: somepassword
+
+  ## JFrog Pipelines API server
+  api:
+
+    ingress:
+      enabled: true
+      annotations:
+        ## If NOT using letsencrypt, you can omit these two lines
+#        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#        kubernetes.io/tls-acme: "true"
+        ## If NOT using letsencrypt, you can omit two lines above
+
+        #ingress.kubernetes.io/force-ssl-redirect: "true"
+        ingress.kubernetes.io/force-ssl-redirect: "false"
+        ingress.kubernetes.io/proxy-body-size: "0"
+        ingress.kubernetes.io/proxy-read-timeout: "600"
+        ingress.kubernetes.io/proxy-send-timeout: "600"
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+        ## Set a custom whitelist IP CIDRs. Comma delimited.
+        # nginx.ingress.kubernetes.io/whitelist-source-range: "1.2.3.4/32,2.3.4.5/32"
+      path: /
+      hosts:
+        # On Docker Desktop for Windows, this should be your windows hostname
+        - "matchstick-man"
+#      tls:
+#        - secretName: artifactory.shabtay.com
+#          hosts:
+#            - artifactory.shabtay.com
+rabbitmq:
+  auth:
+    password: somepassword

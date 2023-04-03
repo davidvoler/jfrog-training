@@ -69,6 +69,43 @@ minikube delete
 ```
 
 
+
+### install virtualenvwrapper ###
+
+```bash
+pip install --user  virtualenvwrapper
+```
+
+
+add the following lines to the end of ~/.bashrc
+```bash 
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source $HOME/.local/bin/virtualenvwrapper.sh
+
+```
+run the following commands to create a virtualenv 
+```bash 
+source $HOME/.bashrc
+mkvirtualenv jfrog
+workon jfrog
+```
+
+
+### jfrog utilities ###
+
+```bash 
+mkdir dev
+cd dev
+git clone  git@github.com:devops-sherpas/jfrog-utils.git
+git clone  git@github.com:devops-sherpas/jfrog-lib.git
+
+pip install -e jfrog-lib/
+pip install -e jfrog-utils/
+```
+
+
 ## Postgres installation ##  
 
 We are going to create a single database server inside the kubernetes cluster.
@@ -77,8 +114,38 @@ After the server is created we are going to create multiple database inside this
 
 ```bash
 cd postgres
-kubectl applay -f 
+kubectl apply -f config.yaml
+kubectl apply -f volume.yaml
+kubectl apply -f service.yaml
+kubectl apply -f postgres.yaml
+```
+
+
+now we should get the pod in which postgres is running and we are going to create the databases
+
+```bash
+kubectl get pods
+```
+
+you will get a database named postgres-xxxxx-sss
+
+```bash
+kubectl exec -it postgres-XXXXX-SSS bash
+su postgres
+#create the databases
+createdb artifactory           
+createdb artifactory-asia      
+createdb artifactory-europe    
+createdb distribution          
+createdb insights              
+createdb platform-artifactory  
+createdb platform-distribution 
+createdb platform-insights     
+createdb platform-xray         
+createdb xray                  
 ```
 
 
 ## jfrog installation ## 
+
+

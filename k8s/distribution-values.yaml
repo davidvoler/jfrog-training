@@ -1,0 +1,15 @@
+distribution:
+  joinKeySecretName: join-key
+  jfrogUrl: http://artifactory-artifactory-nginx:81
+postgresql:
+  enabled: false
+database:
+  # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+  # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+  url: "jdbc:postgresql://postgres:5432/distribution"
+  type: postgresql
+  driver: org.postgresql.Driver
+  user: postgres
+  # TODO: Change this to be your PostgreSQL's root password
+  password: isaac
+unifiedUpgradeAllowed: true

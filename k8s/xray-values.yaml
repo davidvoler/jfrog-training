@@ -1,0 +1,37 @@
+xray:
+  joinKeySecretName: join-key
+  jfrogUrl: http://artifactory-artifactory-nginx:81
+  openMetrics:
+    enabled: true
+    filebeat:
+      enabled: true
+      elasticsearch:
+        url: http://insight:8082/elasticsearch
+        username: admin
+        password: admin
+unifiedUpgradeAllowed: true
+#databaseUpgradeReady: true
+
+# For internal DB
+#postgresql:
+#  postgresqlUsername: xray
+#  postgresqlPassword: isaac
+
+# For external DB
+postgresql:
+  enabled: false
+database:
+  url: "postgres://postgres:5432/xray?sslmode=disable"
+  type: "postgresql"
+  driver: "org.postgresql.Driver"
+  user: postgres
+  # TODO: Change this to be your PostgreSQL's root password
+  password: isaac
+rabbitmq:
+  auth:
+    username: guest
+    password: IEHVgOXVs7
+server:
+  resources:
+    limits:
+      cpu: "2"
