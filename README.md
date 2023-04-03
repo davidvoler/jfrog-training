@@ -146,6 +146,16 @@ createdb xray
 ```
 
 
+## hosts ##
+
+On the host computer add the following to /etc/hosts
+VM_IP = the ip of the virtual machine oyu have created 
+
+```
+VM_IP artifactory.localhost artifactory-docker.localhost asia.localhost europe.localhost
+
+```
+
 ## jfrog installation ## 
 
 
