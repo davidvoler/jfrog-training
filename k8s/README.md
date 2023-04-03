@@ -1,87 +1,23 @@
-# Installation
-
-**NOTES - READ THESE FIRST**
-
-1. If using `wsl2`, ensure your `.wslconfig` allows at least 16GB of RAM for `wsl2` (default is 50% of total RAM or 8GB, whichever is less).
-
-2. You will see references to "DevOps Sherpas CLI config file". You will need to create this file in `%userprofile%\.dosjfrog\config.yaml` (Windows) or `~/.dosjfrog/config.yaml` (Linux).
-
-3. For any `helm upgrade --install` command, there's a values YAML file embedded in the command. You need to update the YAML
-   file to contain the administration password for your PostgreSQL installation (look for "TODO" in those YAML files).
-
-**INSTRUCTIONS**
-
-1. Add the following to your hosts file (`C:\Windows\system32\drivers\etc\hosts` on Windows, `/etc/hosts` on Linux):
-
-```
-127.0.0.1 artifactory.localhost artifactory-docker.localhost asia.localhost europe.localhost
-```
-
-2. Install Python 3.8 or later, and create a virtual environment:
-   * To create virtual environment (instructions are for Windows):
-     ```bash
-     python -m venv %userprofile%\venv-jfrog
-     %userprofile%\venv-jfrog\Scripts\pip install https://github.com/devops-sherpas/jfrog-lib.git
-     %userprofile%\venv-jfrog\Scripts\pip install https://github.com/devops-sherpas/jfrog-utils.git
-     ```
-
-3. Add a DevOps Sherpas CLI configuration file (see note above) with the following contents (we will update it later):
-   ```yaml
-   local:
-     endpoint: http://artifactory.localhost:81
-     username: admin
-     password: <empty>
-     token: <empty>
-   local-asia:
-     endpoint: http://edge.localhost:82
-     username: admin
-     password: <empty>
-     token: <empty>
-   local-europe:
-     endpoint: http://europe.localhost:83
-     username: admin
-     password: <empty>
-     token: <empty>
-    ```
-
-4. Install PostgreSQL.
-
-   **NOTE**: The rest of this document assumes that you installed PostgreSQL on the Windows host. You can also
-   install it as a docker container if you'd like, but you'll have to modify certain values in the various YAML
-   files accordingly. These will be noted in the YAML files themselves.
-
-5. Create databases for the products you'd like to install (open `pgadmin`, right click "Databases" and "Create"):
-
-   * For Artifactory: `artifactory`
-   * For Artifactory-Europe: `artifactory-europe`
-   * For Insights: `insights`
-   * For Xray: `xray`
-
-6. Install ingress-nginx
-
-   ```bash
-   helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx
-   ```
   
 7. Add JFrog's helm repo
 
-   ```bash
-   helm repo add jfrog https://charts.jfrog.io/
-   ```
+```bash
+helm repo add jfrog https://charts.jfrog.io/
+```
 
 8. Create a secret to contain the join key:
 
-   ```bash
-   kubectl create secret generic join-key --from-literal=join-key=044c6240e62129e75d5ef9def656d992
-   ```
+```bash
+kubectl create secret generic join-key --from-literal=join-key=044c6240e62129e75d5ef9def656d992
+```
 
 9. Install Artifactory
 
-   ```bash
-   helm upgrade --install artifactory -f artifactory-values.yaml jfrog/artifactory
-   ```
+```bash
+helm upgrade --install artifactory -f artifactory-values.yaml jfrog/artifactory
+```
 
-   From now on, you can access artifactory via http://artifactory.localhost:81
+From now on, you can access artifactory via http://artifactory.localhost:81
 
 10. Launch the Artifactory UI (default password: `password`) and complete the basic installation and configuration:
 

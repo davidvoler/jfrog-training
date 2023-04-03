@@ -14,7 +14,7 @@ The virtual server should have
 - 8 GB memory - recommended 16 GB
 
 
-## install Docker ##
+## 1.0 install Docker ##
 ```bash    
 sudo apt-get install ca-certificates   curl gnupg
 sudo mkdir -m 0755 -p /etc/apt/keyrings
@@ -31,7 +31,7 @@ restart the server
 sudo reboot
 ```
 
-## install minikube
+## 2.0 install minikube ##
 
 ```bash
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -48,7 +48,7 @@ minikube config set memory 16000 #memory is in MB
 ```
 please note that configuration do not apply to an existing minikube cluster and you have to delete and create the cluster for the setting to take place
 
-
+#### 2.1 create minikube cluster ####
 Now lets start minikube
 
 ```bash
@@ -61,16 +61,13 @@ lets enable the ingress addon on minikube
 minikube addons enable ingress
 ```
 
-Now remember that at any stage you can delete and recreate the minikube cluster
+### 2.2 install helm ###
 
-The delete command in 
-```bash 
-minikube delete
+```bash
+sudo snap install help --classic 
 ```
 
-
-
-### install virtualenvwrapper ###
+### 3.0 install virtualenvwrapper ###
 
 ```bash
 pip install --user  virtualenvwrapper
@@ -93,7 +90,7 @@ workon jfrog
 ```
 
 
-### jfrog utilities ###
+### 4.0 jfrog utilities ###
 
 ```bash 
 mkdir dev
@@ -106,7 +103,7 @@ pip install -e jfrog-utils/
 ```
 
 
-## Postgres installation ##  
+### 5.0 Postgres installation ###  
 
 We are going to create a single database server inside the kubernetes cluster.
 
@@ -146,16 +143,47 @@ createdb xray
 ```
 
 
-## hosts ##
+### 6.0 hosts ###
 
-On the host computer add the following to /etc/hosts
 VM_IP = the ip of the virtual machine oyu have created 
 
+to get the vm ip 
+```bash 
+ip addr
 ```
+On the host computer add the following to /etc/hosts
+
+```bash
 VM_IP artifactory.localhost artifactory-docker.localhost asia.localhost europe.localhost
 
 ```
 
-## jfrog installation ## 
+### 7.0 jfrog installation ### 
+
+```bash 
+cd k8s 
+```
+follow the instructions in  k8s/README.md 
+
+
+### 8.0 restarting the process - delete the minikube cluster ###
+
+Now remember that at any stage you can delete and recreate the minikube cluster
+
+
+The delete command in 
+```bash 
+minikube delete
+```
+
+Now you can start from stage  2.1
+
+
+
+### 9.0 cleanup ###
+
+The easiest way to clean up is simply deleting the virtual machine with all its file 
+
+You would also want to delete the changes to /etc/hosts on the host machine 
 
 
