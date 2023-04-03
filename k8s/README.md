@@ -40,6 +40,7 @@ e. Edit the DevOps Sherpas CLI config file. Under `local`, modify the `password`
     modify the `token` to contain your identity token.
 f. get the url for the service on the virtual machine 
 
+
 ```bash 
 minikube service artifactory-artifactory-nginx
 ```
@@ -84,24 +85,24 @@ helm upgrade --install insight -f insights-values.yaml jfrog/insight
 
 12. Install XRay
 
-    ```bash
-    helm upgrade --install xray -f xray-values.yaml jfrog/xray
-    ```
+```bash
+helm upgrade --install xray -f xray-values.yaml jfrog/xray
+```
 
-    * For offline DB update: copy files to XRay
+* For offline DB update: copy files to XRay
 
-      ```bash
-      kubectl cp -c xray-server comp_0.zip xray-0:/var/opt/jfrog/xray/work/server/updates/component/
-      kubectl cp -c xray-server vuln_0.zip xray-0:/var/opt/jfrog/xray/work/server/updates/vulnerability/
-      ```
+```bash
+kubectl cp -c xray-server comp_0.zip xray-0:/var/opt/jfrog/xray/work/server/updates/component/
+kubectl cp -c xray-server vuln_0.zip xray-0:/var/opt/jfrog/xray/work/server/updates/vulnerability/
+```
 
-      Then trigger DB sync from the UI.
+Then trigger DB sync from the UI.
 
 13. Install additional environment ("europe")
 
-    ```bash
-    helm upgrade --install artifactory-europe -f artifactory-europe-values.yaml jfrog/artifactory
-    ```
+```bash
+helm upgrade --install artifactory-europe -f artifactory-europe-values.yaml jfrog/artifactory
+```
 
     Then, log in to the new Artifactory (http://artifactory-europe.localhost:83 with username `admin` and password `password`).
 
@@ -111,20 +112,36 @@ helm upgrade --install insight -f insights-values.yaml jfrog/insight
     Go to "User Management" -> "Access Tokens", click "Generate Token" and create a Pairing Token. Remember it (we will call it
     "Europe Pairing Token").
 
+ a. add europe configuration to the nginx config file and restart docker compose 
+
+
 14. Add "europe" as a Platform Deployment in the main artifactory. Replace `TOKEN` at the end of the command below with the
     value of the pairing token you just created:
 
-    ```bash
-    %userprofile%\venv-jfrog\Scripts\mc register-jpd --profile local --name europe --url http://artifactory-europe:8082 --city Frankfurt --country DE --latitude 50.11552 --longitude 8.68417 --pairing-token TOKEN
-    ```
+
+
+
+```yaml
+local-europe:
+    endpoint: http://europe:83
+    username: admin
+    password: YOURPASS
+    token: YOURTOKEN
+```
+
+```bash
+workon jfrog
+mc register-jpd --profile local --name europe --url http://europe:8082 --city Frankfurt --country DE --latitude 50.11552 --longitude 8.68417 --pairing-token TOKEN
+```
 
     The command will provide a JSON. Remember the `id` field, you'll need it soon.
 
 15. Assign license to "europe". Replace `JPD_ID` with the JPD ID from before.
 
-    ```bash
-    %userprofile%\venv-jfrog\Scripts\mc attach-license --profile local --jpd-id JPD_ID --bucket main
-    ```
+```bash
+workon jfrog
+mc attach-license --profile local --jpd-id JPD_ID --bucket main
+```
 
 16. Log out of the `europe` site, and log back in. You should have full functionality now.
 
@@ -133,13 +150,13 @@ helm upgrade --install insight -f insights-values.yaml jfrog/insight
 18. Edit the DevOps Sherpas CLI configuration file. Under `local-europe`, populate your new password and identity token for the `europe` site.
 19. Establish Circle of Trust between the two Artifactory sites
 
-   ```bash
-   mkdir .tmp
-   kubectl cp artifactory-0:var/etc/access/keys/root.crt .tmp/artifactory-root.crt
-   kubectl cp artifactory-europe-0:var/etc/access/keys/root.crt .tmp/europe-root.crt
-   kubectl cp .tmp/artifactory-root.crt artifactory-europe-0:var/etc/access/keys/trusted/
-   kubectl cp .tmp/europe-root.crt artifactory-0:var/etc/access/keys/trusted/
-   ```
+```bash
+mkdir .tmp
+kubectl cp artifactory-0:var/etc/access/keys/root.crt .tmp/artifactory-root.crt
+kubectl cp artifactory-europe-0:var/etc/access/keys/root.crt .tmp/europe-root.crt
+kubectl cp .tmp/artifactory-root.crt artifactory-europe-0:var/etc/access/keys/trusted/
+kubectl cp .tmp/europe-root.crt artifactory-0:var/etc/access/keys/trusted/
+```
 
 **NOTE** Only proceed if you need to train on Distribution / Pipelines.
 
