@@ -1750,7 +1750,7 @@ postgresql:
     port: 5432
   persistence:
     enabled: true
-    size: 100Gi
+    size: 10Gi
     # existingClaim:
   primary:
     nodeSelector: {}

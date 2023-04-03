@@ -254,7 +254,7 @@ postgresql:
     port: 5432
   persistence:
     enabled: true
-    size: 100Gi
+    size: 10Gi
     # existingClaim:
   primary:
     nodeSelector: {}
@@ -328,7 +328,7 @@ elasticsearch:
 
     mountPath: "/usr/share/elasticsearch/data"
     accessMode: ReadWriteOnce
-    size: 100Gi
+    size: 10Gi
     ## ElasticSearch data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -547,7 +547,7 @@ insightServer:
 
     mountPath: "/var/opt/jfrog/insight"
     accessMode: ReadWriteOnce
-    size: 100Gi
+    size: 10Gi
     ## Insight Server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning

@@ -159,7 +159,7 @@ postgresql:
     port: 5432
   persistence:
     enabled: true
-    size: 50Gi
+    size: 5Gi
     # existingClaim:
   primary:
     nodeSelector: {}
@@ -522,7 +522,7 @@ distribution:
 
     accessMode: ReadWriteOnce
     mountPath: "/var/opt/jfrog/distribution"
-    size: 50Gi
+    size: 5Gi
     ## distribution data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning

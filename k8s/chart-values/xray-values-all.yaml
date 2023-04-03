@@ -590,7 +590,7 @@ common:
     accessMode: ReadWriteOnce
     ## Container storage limit if persistence.enabled: false
     ## Otherwise PVC size
-    size: 50Gi
+    size: 5Gi
     ## server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
