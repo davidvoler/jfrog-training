@@ -21,29 +21,66 @@ From now on, you can access artifactory via http://artifactory.localhost:81
 
 10. Launch the Artifactory UI (default password: `password`) and complete the basic installation and configuration:
 
-   a. You will be forced to change your password. Take note of it, this is the Artifactory administration password.
+a. You will be forced to change your password. Take note of it, this is the Artifactory administration password.
 
-   b. Set the custom base url, using the NGINX svc name (otherwise access federation setup fails, as well as federated repositories).
-      To get the service name, use `kubectl get svc`. Normally, this would be `artifactory-artifactory-nginx` and the port
-      will be `81`. So the URL should be `http://artifactory-artifactory-nginx:81`.
+b. Set the custom base url, using the NGINX svc name (otherwise access federation setup fails, as well as federated repositories).
+    To get the service name, use `kubectl get svc`. Normally, this would be `artifactory-artifactory-nginx` and the port
+    will be `81`. So the URL should be `http://artifactory-artifactory-nginx:81`.
 
-   c. Upload the license buckets (see the `licenses` directory in the root of this repository):
+c. Upload the license buckets (see the `licenses` directory in the root of this repository):
 
-      i. The `eplus.json` bucket file should be uploaded with the name `main` and with the unlock code located in `eplus.txt`
+    i. The `eplus.json` bucket file should be uploaded with the name `main` and with the unlock code located in `eplus.txt`
 
-      ii. The `edge.json` bucket file should be uploaded with the name `edge` and with the unlock code located in `edge.txt`
+    ii. The `edge.json` bucket file should be uploaded with the name `edge` and with the unlock code located in `edge.txt`
 
-   d. Create an access token for yourself: open the user menu (top right), "Edit Profile", then generate an identity token
-      and copy it to the clipboard.
+d. Create an access token for yourself: open the user menu (top right), "Edit Profile", then generate an identity token
+    and copy it to the clipboard.
 
-   e. Edit the DevOps Sherpas CLI config file. Under `local`, modify the `password` to contain your new password, and
-      modify the `token` to contain your identity token.
+e. Edit the DevOps Sherpas CLI config file. Under `local`, modify the `password` to contain your new password, and
+    modify the `token` to contain your identity token.
+f. get the url for the service on the virtual machine 
+
+```bash 
+minikube service artifactory-artifactory-nginx
+```
+copy the file  
+
+
+```bash
+mkdir ~/.dosjfrog/
+nano ~/.dosjfrog/config.yaml
+```
+
+copy the following content into the file:
+exposevm/default.example.conf
+
+```bash
+cd exposevm
+cp default.example.conf  default.local.conf
+```
+
+Replace the ARTIFACTORY_URL with the url you got from minikube - 
+Note that you get 2 urls http and https choose the http 
+Now start the docker compose 
+
+```bash
+docker compose up -d 
+```
+
+```yaml
+local:
+    endpoint: http://artifactory:81
+    username: admin
+    password: THE PASSWORD 
+    token: THE TOKEN
+```
+
 
 11. Install Insights
 
-   ```bash
-   helm upgrade --install insight -f insights-values.yaml jfrog/insight
-   ```
+```bash
+helm upgrade --install insight -f insights-values.yaml jfrog/insight
+```
 
 12. Install XRay
 
