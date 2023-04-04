@@ -16,6 +16,10 @@ kubectl create secret generic join-key --from-literal=join-key=044c6240e62129e75
 ```bash
 helm upgrade --install artifactory -f artifactory-values.yaml jfrog/artifactory
 ```
+```
+minikube service url
+```
+
 
 From now on, you can access artifactory via http://artifactory.localhost:81
 
@@ -44,7 +48,6 @@ f. get the url for the service on the virtual machine
 ```bash 
 minikube service artifactory-artifactory-nginx
 ```
-copy the file  
 
 
 ```bash
@@ -129,9 +132,15 @@ local-europe:
     token: YOURTOKEN
 ```
 
+15. get the port for europe by 
+```bash 
+minikube service url artifactory-europe-artifactory-nginx 
+```
+
+
 ```bash
 workon jfrog
-mc register-jpd --profile local --name europe --url http://europe:8082 --city Frankfurt --country DE --latitude 50.11552 --longitude 8.68417 --pairing-token TOKEN
+mc register-jpd --profile local --name europe --url http://europe:THE_NODE_PORT --city Frankfurt --country DE --latitude 50.11552 --longitude 8.68417 --pairing-token TOKEN
 ```
 
     The command will provide a JSON. Remember the `id` field, you'll need it soon.
@@ -171,34 +180,43 @@ kubectl cp .tmp/europe-root.crt artifactory-0:var/etc/access/keys/trusted/
 helm upgrade --install distribution -f distribution-values.yaml jfrog/distribution
 ```
 
-  a. Upload GPG key to distribution. Activate the Python virtual environment created above, and then:
+a. Upload GPG key to distribution. Activate the Python virtual environment created above, and then:
 
-    ```bash
-    %userprofile%\venv-jfrog\Scripts\distribution upload-keys-and-propagate --profile local --public-key-file public.asc --private-key-file private.asc --default --protocol gpg
-    ```
+```bash
+distribution upload-keys-and-propagate --profile local --public-key-file public.asc --private-key-file private.asc --default --protocol gpg
+```
+this works
+```bash 
+distribution upload-keys-and-propagate --profile local --public public.asc --private private.asc --default --protocol gpg --alias local
+```
 
 3. Install Edge ("asia")
 
-   ```bash
-   helm upgrade --install artifactory-asia -f artifactory-asia-values.yaml jfrog/artifactory
-   ```
+```bash
+helm upgrade --install artifactory-asia -f artifactory-asia-values.yaml jfrog/artifactory
+```
 
-   Then follow the same post-installation steps as you did for the Europe site. (The URL should be http://artifactory-asia.localhost:82)
+a. get the asia url 
+```bash
+minikube service url artifactory-asia-artifactory-nginx
+``` 
+
+   Then follow the same post-installation steps as you did for the Europe site. (The URL should be http://asia:PORT)
 
 4. Add "asia" as a Platform Deployment in the main artifactory. Replace `TOKEN` at the end of the command below with the
    value of the pairing token you just created:
 
-   ```bash
-   %userprofile%\venv-jfrog\Scripts\mc register-jpd --profile local --name europe --url http://artifactory-asia:8082 --city Mumbai --country IN --latitude 19.07283 --longitude 72.88261 --pairing-token TOKEN
-   ```
+```bash
+mc register-jpd --profile local --name asia --url http://asia:PORT --city Mumbai --country IN --latitude 19.07283 --longitude 72.88261 --pairing-token TOKEN
+```
 
    The command will provide a JSON. Remember the `id` field, you'll need it soon.
 
 5. Assign an Edge license to "asia". Replace `JPD_ID` with the JPD ID from before.
 
-    ```bash
-    %userprofile%\venv-jfrog\Scripts\mc attach-license --profile local --jpd-id JPD_ID --bucket edge
-    ```
+```bash
+mc attach-license --profile local --jpd-id JPD_ID --bucket edge
+```
 
 6. Log out of the `asia` site, and log back in. You should have full Edge functionality now.
 
@@ -207,19 +225,19 @@ helm upgrade --install distribution -f distribution-values.yaml jfrog/distributi
 9. Edit the DevOps Sherpas CLI configuration file. Under `local-asia`, populate your new password and identity token for the `asia` site.
 10. Establish Circle of Trust between "asia" and the two remaining Artifactory sites
 
-   ```bash
-   kubectl cp artifactory-asia-0:var/etc/access/keys/root.crt .tmp/asia-root.crt
-   kubectl cp .tmp/artifactory-root.crt artifactory-asia-0:var/etc/access/keys/trusted/
-   kubectl cp .tmp/europe-root.crt artifactory-asia-0:var/etc/access/keys/trusted/
-   kubectl cp .tmp/asia-root.crt artifactory-europe-0:var/etc/access/keys/trusted/
-   kubectl cp .tmp/asia-root.crt artifactory-0:var/etc/access/keys/trusted/
-   ```
+```bash
+kubectl cp artifactory-asia-0:var/etc/access/keys/root.crt .tmp/asia-root.crt
+kubectl cp .tmp/artifactory-root.crt artifactory-asia-0:var/etc/access/keys/trusted/
+kubectl cp .tmp/europe-root.crt artifactory-asia-0:var/etc/access/keys/trusted/
+kubectl cp .tmp/asia-root.crt artifactory-europe-0:var/etc/access/keys/trusted/
+kubectl cp .tmp/asia-root.crt artifactory-0:var/etc/access/keys/trusted/
+```
 
 11. Install Pipelines
 
-   ```bash
-   helm upgrade --install pipelines jfrog/pipelines -f pipelines-values.yaml
-   ```
+```bash
+helm upgrade --install pipelines jfrog/pipelines -f pipelines-values.yaml
+```
 
 # CONTROL
 
@@ -227,6 +245,7 @@ helm upgrade --install distribution -f distribution-values.yaml jfrog/distributi
 
 ### Infra
 
+# not needed in linux 
 ```bash
 kubectl scale deployment ingress-nginx-controller --namespace ingress-nginx --replicas=1
 ```

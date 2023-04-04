@@ -119,7 +119,7 @@ kubectl apply -f postgres.yaml
 
 
 now we should get the pod in which postgres is running and we are going to create the databases
-
+ - ~2 minutes wait  
 ```bash
 kubectl get pods
 ```
@@ -140,8 +140,18 @@ createdb platform-distribution
 createdb platform-insights     
 createdb platform-xray         
 createdb xray                  
-```
 
+
+#review the list of created databases
+psql
+\l
+#you should get the list of created databases
+
+#to exit 
+\q
+exit 
+exit
+```
 
 ### 6.0 hosts ###
 
@@ -151,11 +161,19 @@ to get the vm ip
 ```bash 
 ip addr
 ```
+
+
 On the host computer add the following to /etc/hosts
 
 ```bash
 VM_IP artifactory.localhost artifactory-docker.localhost asia.localhost europe.localhost
 
+```
+
+to get the minikube ip (the default is 192.168.49.2)
+
+```bash
+minikube ip
 ```
 
 ### 7.0 jfrog installation ### 
