@@ -124,7 +124,7 @@ now we should get the pod in which postgres is running and we are going to creat
 kubectl get pods
 ```
 
-you will get a database named postgres-xxxxx-sss
+you will get a database named postgres-xxxxx-sss (with some random string and numbers)
 
 ```bash
 kubectl exec -it postgres-XXXXX-SSS bash

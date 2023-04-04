@@ -167,9 +167,9 @@ kubectl cp .tmp/europe-root.crt artifactory-0:var/etc/access/keys/trusted/
 
 2. Install Distribution
 
-   ```bash
-   helm upgrade --install distribution -f distribution-values.yaml jfrog/distribution
-   ```
+```bash
+helm upgrade --install distribution -f distribution-values.yaml jfrog/distribution
+```
 
   a. Upload GPG key to distribution. Activate the Python virtual environment created above, and then:
 
