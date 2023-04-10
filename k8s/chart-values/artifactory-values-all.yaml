@@ -717,16 +717,17 @@ artifactory:
   annotations: {}
   service:
     name: artifactory
-    type: ClusterIP
+    type: NodePort
+    # type: ClusterIP
     ## For supporting whitelist on the Artifactory service (useful if setting service.type=LoadBalancer)
     ## Set this to a list of IP CIDR ranges
     ## Example: loadBalancerSourceRanges: ['10.10.10.5/32', '10.11.10.5/32']
     ## or pass from helm command line
     ## Example: helm install ... --set nginx.service.loadBalancerSourceRanges='{10.10.10.5/32,10.11.10.5/32}'
-    loadBalancerSourceRanges: []
-    annotations: {}
+    # loadBalancerSourceRanges: []
+    # annotations: {}
     ## If the type is NodePort you can set a fixed port
-    # nodePort: 32082
+    nodePort: 81
   statefulset:
     annotations: {}
   ## The following setting are to configure a dedicated Ingress object for Replicator service
@@ -1594,23 +1595,24 @@ nginx:
 
   service:
     ## For minikube, set this to NodePort, elsewhere use LoadBalancer
-    type: LoadBalancer
-    ssloffload: false
+    type: NodePort
+    # type: LoadBalancer
+    # ssloffload: false
     ## For supporting whitelist on the Nginx LoadBalancer service
     ## Set this to a list of IP CIDR ranges
     ## Example: loadBalancerSourceRanges: ['10.10.10.5/32', '10.11.10.5/32']
     ## or pass from helm command line
     ## Example: helm install ... --set nginx.service.loadBalancerSourceRanges='{10.10.10.5/32,10.11.10.5/32}'
-    loadBalancerSourceRanges: []
-    annotations: {}
+    # loadBalancerSourceRanges: []
+    # annotations: {}
     ## Provide static ip address
-    loadBalancerIP:
+    # loadBalancerIP:
     ## There are two available options: “Cluster” (default) and “Local”.
-    externalTrafficPolicy: Cluster
+    # externalTrafficPolicy: Cluster
     ## If the type is NodePort you can set a fixed port
-    # nodePort: 32082
+    nodePort: 82
     ## A list of custom ports to be exposed on nginx service. Follows the conventional Kubernetes yaml syntax for service ports.
-    customPorts: []
+    # customPorts: []
     # - port: 8066
     #   targetPort: 8066
     #   protocol: TCP

@@ -9,6 +9,10 @@ artifactory:
         url: http://insight:8082/elasticsearch
   consoleLog: true
   joinKeySecretName: join-key
+  # service:
+  #   name: artifactory
+  #   type: NodePort
+  #   nodePort: 81  
 mc:
   enabled: true
 nginx:
@@ -29,7 +33,7 @@ ingress:
   defaultBackend:
     enabled: false
   hosts:
-    - "artifactory-docker.localhost"
+    - "artifactory"
   annotations:
     ingress.kubernetes.io/force-ssl-redirect: "false"
     ingress.kubernetes.io/proxy-body-size: "0"

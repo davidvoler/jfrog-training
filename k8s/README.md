@@ -17,7 +17,7 @@ kubectl create secret generic join-key --from-literal=join-key=044c6240e62129e75
 helm upgrade --install artifactory -f artifactory-values.yaml jfrog/artifactory
 ```
 ```
-minikube service url
+minikube service url artifactory-artifactory-nginx
 ```
 
 

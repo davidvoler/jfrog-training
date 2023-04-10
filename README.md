@@ -64,7 +64,7 @@ minikube addons enable ingress
 ### 2.2 install helm ###
 
 ```bash
-sudo snap install help --classic 
+sudo snap install helm --classic 
 ```
 
 ### 3.0 install virtualenvwrapper ###
