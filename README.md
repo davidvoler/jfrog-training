@@ -226,3 +226,12 @@ sudo service docker restart
 docker login 192.168.122.25:8082
 docker tag nginx:latest 192.168.122.25:8082/docker-local/nginx:latest
 docker push 192.168.122.25:8082/docker-local/nginx:latest
+
+
+
+
+cmVmdGtuOjAxOjE3MTI3Mzc0NzE6TThDaFdCcWpxa2dNNTdpb21KUkxlSU9iTkVZ
+
+
+85 admin
+cmVmdGtuOjAxOjE3MTI3NTM2NzM6dEdJSWNiVXBsYXpjaEJiSW5IdWlmWXAzUmtH

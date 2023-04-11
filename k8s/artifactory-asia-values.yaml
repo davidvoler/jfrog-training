@@ -1,10 +1,10 @@
 artifactory:
   consoleLog: true
-nginx:
-  http:
-    externalPort: 82
-  https:
-    externalPort: 445
+# nginx:
+#   http:
+#     externalPort: 82
+#   https:
+#     externalPort: 445
 databaseUpgradeReady: true
 
 postgresql:

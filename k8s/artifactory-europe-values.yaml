@@ -1,10 +1,10 @@
 artifactory:
   consoleLog: true
-nginx:
-  http:
-    externalPort: 83
-  https:
-    externalPort: 446
+# nginx:
+#   http:
+#     externalPort: 83
+#   https:
+#     externalPort: 446
 databaseUpgradeReady: true
 
 # For internal DB
