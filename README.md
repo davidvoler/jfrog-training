@@ -205,3 +205,24 @@ The easiest way to clean up is simply deleting the virtual machine with all its 
 You would also want to delete the changes to /etc/hosts on the host machine 
 
 
+
+
+### experiments ###
+https://jfrog.com/artifactory/install/
+
+docker volume create artifactory-data
+docker pull releases-docker.jfrog.io/jfrog/artifactory-pro:latest
+docker run -d --name artifactory -p 8082:8082 -p 8081:8081 -v artifactory-data:/var/opt/jfrog/artifactory releases-docker.jfrog.io/jfrog/artifactory-pro:latest
+
+the ip is: 192.168.122.25
+
+/etc/docker/daemon
+{
+  "insecure-registries" : ["192.168.122.25:8082"]     
+}
+
+sudo service docker restart
+
+docker login 192.168.122.25:8082
+docker tag nginx:latest 192.168.122.25:8082/docker-local/nginx:latest
+docker push 192.168.122.25:8082/docker-local/nginx:latest

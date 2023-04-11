@@ -29,21 +29,21 @@ nginx:
 databaseUpgradeReady: true
 
 ingress:
-  enabled: true
-  defaultBackend:
-    enabled: false
-  hosts:
-    - "artifactory"
-  annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "false"
-    ingress.kubernetes.io/proxy-body-size: "0"
-    ingress.kubernetes.io/proxy-read-timeout: "600"
-    ingress.kubernetes.io/proxy-send-timeout: "600"
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^/(v2)/token /artifactory/api/docker/null/v2/token;
-      rewrite ^/(v2)/([^\/]*)/(.*) /artifactory/api/docker/$2/$1/$3;
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  enabled: false
+  # defaultBackend:
+  #   enabled: false
+  # hosts:
+  #   - "artifactory"
+  # annotations:
+  #   ingress.kubernetes.io/force-ssl-redirect: "false"
+  #   ingress.kubernetes.io/proxy-body-size: "0"
+  #   ingress.kubernetes.io/proxy-read-timeout: "600"
+  #   ingress.kubernetes.io/proxy-send-timeout: "600"
+  #   kubernetes.io/ingress.class: nginx
+  #   nginx.ingress.kubernetes.io/configuration-snippet: |
+  #     rewrite ^/(v2)/token /artifactory/api/docker/null/v2/token;
+  #     rewrite ^/(v2)/([^\/]*)/(.*) /artifactory/api/docker/$2/$1/$3;
+  #   nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
 # For internal DB
 #postgresql:
