@@ -49,11 +49,22 @@ minikube config set memory 16000 #memory is in MB
 please note that configuration do not apply to an existing minikube cluster and you have to delete and create the cluster for the setting to take place
 
 #### 2.1 create minikube cluster ####
-Now lets start minikube
+
+We recommend using kvm2 as the driver for minikube. 
+The default minikube driver is docker
+
+Start minikube with kvm2 driver 
+
+```bash
+minikube start --driver kvm2
+```
+Start minikube with docker driver 
 
 ```bash
 minikube start
 ```
+
+
 
 lets enable the ingress addon on minikube
 
@@ -72,7 +83,6 @@ sudo snap install helm --classic
 ```bash
 pip install --user  virtualenvwrapper
 ```
-
 
 add the following lines to the end of ~/.bashrc
 ```bash 
@@ -214,24 +224,8 @@ docker volume create artifactory-data
 docker pull releases-docker.jfrog.io/jfrog/artifactory-pro:latest
 docker run -d --name artifactory -p 8082:8082 -p 8081:8081 -v artifactory-data:/var/opt/jfrog/artifactory releases-docker.jfrog.io/jfrog/artifactory-pro:latest
 
-the ip is: 192.168.122.25
-
-/etc/docker/daemon
-{
-  "insecure-registries" : ["192.168.122.25:8082"]     
-}
-
-sudo service docker restart
 
 docker login 192.168.122.25:8082
 docker tag nginx:latest 192.168.122.25:8082/docker-local/nginx:latest
 docker push 192.168.122.25:8082/docker-local/nginx:latest
 
-
-
-
-cmVmdGtuOjAxOjE3MTI3Mzc0NzE6TThDaFdCcWpxa2dNNTdpb21KUkxlSU9iTkVZ
-
-
-85 admin
-cmVmdGtuOjAxOjE3MTI3NTM2NzM6dEdJSWNiVXBsYXpjaEJiSW5IdWlmWXAzUmtH
