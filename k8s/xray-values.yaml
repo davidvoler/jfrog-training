@@ -1,6 +1,6 @@
 xray:
   joinKeySecretName: join-key
-  jfrogUrl: http://artifactory-artifactory-nginx:81
+  jfrogUrl: http://artifactory:8081
   openMetrics:
     enabled: true
     filebeat:

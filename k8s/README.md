@@ -60,30 +60,10 @@ e. Edit the DevOps Sherpas CLI config file. Under `local`, modify the `password`
 f. get the url for the service on the virtual machine 
 
 
-```bash 
-minikube service artifactory-artifactory-nginx
-```
-
 
 ```bash
 mkdir ~/.dosjfrog/
 nano ~/.dosjfrog/config.yaml
-```
-
-copy the following content into the file:
-exposevm/default.example.conf
-
-```bash
-cd exposevm
-cp default.example.conf  default.local.conf
-```
-
-Replace the ARTIFACTORY_URL with the url you got from minikube - 
-Note that you get 2 urls http and https choose the http 
-Now start the docker compose 
-
-```bash
-docker compose up -d 
 ```
 
 ```yaml
@@ -147,10 +127,12 @@ local-europe:
     token: YOURTOKEN
 ```
 
-15. get the port for europe by 
-```bash 
-minikube service url artifactory-europe-artifactory-nginx 
+15. get the ip for europe artifactory by 
+```bash
+kubectl get svc  
 ```
+look for the external ip of 
+artifactory-europe-artifactory-nginx 
 
 
 ```bash
