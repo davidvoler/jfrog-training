@@ -16,12 +16,27 @@ kubectl create secret generic join-key --from-literal=join-key=044c6240e62129e75
 ```bash
 helm upgrade --install artifactory -f artifactory-values.yaml jfrog/artifactory
 ```
+
+run the following command to get an ip for the minikube ingress - open a new terminal or a terminal tab and leave it open 
+The command will require a sudo password
+```bash
+minikube tunnel
 ```
-minikube service url artifactory-artifactory-nginx
+now run the following command to get the IP of the artifactory
+
+```bash
+kubectl get svc
 ```
+you will get results that look something like this:
+
+NAME                            TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)                      AGE
+artifactory                     ClusterIP      10.99.16.151     <none>          8082/TCP,8081/TCP            5m8s
+artifactory-artifactory-nginx   LoadBalancer   10.108.123.98    10.108.123.98   80:31135/TCP,443:30665/TCP   5m8s
+
+you need this external ip of the artifactory-artifactory-nginx 
 
 
-From now on, you can access artifactory via http://artifactory.localhost:81
+From now on, you can access artifactory via http://ARTIFACTORY_NGINX_IP:80
 
 10. Launch the Artifactory UI (default password: `password`) and complete the basic installation and configuration:
 

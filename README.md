@@ -121,10 +121,7 @@ After the server is created we are going to create multiple database inside this
 
 ```bash
 cd postgres
-kubectl apply -f config.yaml
-kubectl apply -f volume.yaml
-kubectl apply -f service.yaml
-kubectl apply -f postgres.yaml
+kubectl apply -f .
 ```
 
 
@@ -165,26 +162,7 @@ exit
 
 ### 6.0 hosts ###
 
-VM_IP = the ip of the virtual machine oyu have created 
 
-to get the vm ip 
-```bash 
-ip addr
-```
-
-
-On the host computer add the following to /etc/hosts
-
-```bash
-VM_IP artifactory.localhost artifactory-docker.localhost asia.localhost europe.localhost
-
-```
-
-to get the minikube ip (the default is 192.168.49.2)
-
-```bash
-minikube ip
-```
 
 ### 7.0 jfrog installation ### 
 
