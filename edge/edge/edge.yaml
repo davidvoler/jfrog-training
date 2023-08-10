@@ -1,0 +1,20 @@
+artifactory:
+  consoleLog: true
+  persistence:
+    existingClaim: edge-pv-claim
+    size: 5Gi
+  ingress:
+    enabled: false
+databaseUpgradeReady: true
+
+postgresql:
+  enabled: false
+database:
+  # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+  # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+  url: jdbc:postgresql://postgres:5432/edge
+  type: postgresql
+  driver: org.postgresql.Driver
+  user: intersystemsadmin
+  # TODO: Change this to be your PostgreSQL's root password
+  password: ALyZzz8P9iL
