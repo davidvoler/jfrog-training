@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: edge
+  POSTGRES_USER: intersystemsadmin
+  POSTGRES_PASSWORD: ALyZzz8P9iL
