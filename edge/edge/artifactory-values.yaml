@@ -1,0 +1,74 @@
+artifactory:
+  openMetrics:
+    enabled: true
+    filebeat:
+      enabled: true
+      elasticsearch:
+        username: admin
+        password: admin
+        url: http://insight:8082/elasticsearch
+  consoleLog: true
+  joinKeySecretName: join-key
+  # service:
+  #   name: artifactory
+  #   type: NodePort
+  #   nodePort: 81  
+mc:
+  enabled: true
+# nginx:
+#   http:
+#     externalPort: 85
+#   https:
+#     externalPort: 448
+# Sidecar containers. To save memory, disable them.
+  loggers: []
+#    - access.log
+#    - error.log
+  logs:
+    level: info
+databaseUpgradeReady: true
+
+# ingress:
+#   enabled: false
+#   # defaultBackend:
+#   #   enabled: false
+#   # hosts:
+#   #   - "artifactory"
+#   # annotations:
+#   #   ingress.kubernetes.io/force-ssl-redirect: "false"
+#   #   ingress.kubernetes.io/proxy-body-size: "0"
+#   #   ingress.kubernetes.io/proxy-read-timeout: "600"
+#   #   ingress.kubernetes.io/proxy-send-timeout: "600"
+#   #   kubernetes.io/ingress.class: nginx
+#   #   nginx.ingress.kubernetes.io/configuration-snippet: |
+#   #     rewrite ^/(v2)/token /artifactory/api/docker/null/v2/token;
+#   #     rewrite ^/(v2)/([^\/]*)/(.*) /artifactory/api/docker/$2/$1/$3;
+#   #   nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+# For internal DB
+#postgresql:
+#  enabled: true
+#  postgresqlUsername: xray
+#  postgresqlPassword: isaac
+
+# For external DB
+postgresql:
+  enabled: false
+# database:
+#   # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+#   # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+#   url: jdbc:postgresql://postgres:5432/artifactory
+#   type: postgresql
+#   driver: org.postgresql.Driver
+#   user: postgres
+#   # TODO: Change this to be your PostgreSQL's root password
+#   password: isaac
+database:
+  # This assumes PostgreSQL is installed on the host. Otherwise, change this URL
+  # so it points correctly to the PostgreSQL container (don't forget to expose the port)
+  url: jdbc:postgresql://postgres:5432/artifactory
+  type: postgresql
+  driver: org.postgresql.Driver
+  user: intersystemsadmin
+  # TODO: Change this to be your PostgreSQL's root password
+  password: ALyZzz8P9iL
